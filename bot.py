@@ -1,19 +1,15 @@
-from turtle import up
-from pyautogui import *
-import pyautogui, time, keyboard, random, win32api, win32con
-import numpy as np
+import pyautogui, win32api, win32con, time
 
-goRight = [1035, 580]
-boxRight = [1035, 550]
-goLeft = [890, 510]
-boxLeft = [890, 480]
-goUp = [1040, 510]
-boxUp = [1040, 480]
-goDown = [900, 580]
-boxDown = [900, 550]
+goRight = [1010, 575]
+boxRight = [1010, 550]
+goLeft = [915, 520]
+boxLeft = [915, 495]
+goUp = [1000, 520]
+boxUp = [1000, 495]
+goDown = [920, 570]
+boxDown = [920, 545]
 door = [1000, 500]
 openDoor = [1000, 470]
-
 
 def lclick(x,y):
     win32api.SetCursorPos((x,y))
@@ -27,59 +23,98 @@ def rclick(x,y):
     time.sleep(0.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
 
-def startDig():
-    rclick(door[0], door[1])
-    time.sleep(0.5)
-    lclick(openDoor[0], openDoor[1])
-
 def digUp():
     rclick(goUp[0], goUp[1])
-    time.sleep(0.5)
-    lclick(boxUp[0], boxUp[1])
-    time.sleep(2)
+    time.sleep(0.2)
+    rclick(boxUp[0], boxUp[1])
+    pyautogui.moveTo(831, 1050)
+    time.sleep(1.5)
+    lclick(goUp[0], goUp[1])
+    checkFirework()
 
 def digDown():
     rclick(goDown[0], goDown[1])
-    time.sleep(0.5)
-    lclick(boxDown[0], boxDown[1])
-    time.sleep(2)
+    time.sleep(0.2)
+    rclick(boxDown[0], boxDown[1])
+    pyautogui.moveTo(831, 1050)
+    time.sleep(1.5)
+    lclick(goDown[0], goDown[1])
+    checkFirework()
 
 def digLeft():
     rclick(goLeft[0], goLeft[1])
-    time.sleep(0.5)
-    lclick(boxLeft[0], boxLeft[1])
-    time.sleep(2)
+    time.sleep(0.2)
+    rclick(boxLeft[0], boxLeft[1])
+    pyautogui.moveTo(831, 1050)
+    time.sleep(1.5)
+    lclick(goLeft[0], goLeft[1])
+    checkFirework()
 
 def digRight():
     rclick(goRight[0], goRight[1])
-    time.sleep(0.5)
-    lclick(boxRight[0], boxRight[1])
-    time.sleep(2)
-
-def doPath():
-    startDig()
-    lclick(goUp[0], goUp[1])
-    time.sleep(1)
-    digUp()
-    digUp()
-    digRight()
-    digRight()
+    time.sleep(0.2)
+    rclick(boxRight[0], boxRight[1])
+    pyautogui.moveTo(831, 1050) 
+    time.sleep(1.5)
     lclick(goRight[0], goRight[1])
+    checkFirework()
+
+def startDig():
+    rclick(door[0], door[1])
     time.sleep(0.5)
-    lclick(goDown[0], goDown[1])
+    rclick(openDoor[0], openDoor[1])
     time.sleep(0.5)
-    digRight()
-    digRight()
-    digRight()
-    digUp()
-    digRight()
-    digRight()
-    digDown()
-    digRight()
+    lclick(goUp[0], goUp[1])
+    time.sleep(0.4)
 
+def switchPaths():
+    lclick(964, 602)
+    time.sleep(0.4)
 
+def goIn():
+    rclick(700,350)
+    time.sleep(0.5)
+    lclick(700,320)
+    time.sleep(4)
+    startDig()
 
-# while keyboard.is_pressed('q') == False:
-#     pyautogui.displayMousePosition()
-    
-doPath()
+def checkFirework():
+    switch = 0
+    for i in range(70):
+        r,g,b = pyautogui.pixel(1142, 524)
+        if (g >= 220 and b >= 220):
+            switch = 1
+            break
+    if (switch == 1):
+        time.sleep(3)
+        start()
+
+def dig(direction, iterations):
+    if (direction == "up"):
+        for i in range(iterations):
+            digUp()
+    elif (direction == "left"):
+        for i in range(iterations):
+            digLeft()
+    elif (direction == "right"):
+        for i in range(iterations):
+            digRight()
+    elif (direction == "down"):
+        for i in range(iterations):
+            digDown()
+    else:
+        print("fuck u")
+
+def start():
+    goIn()
+    dig("up", 2)
+    dig("right", 2)
+    switchPaths()
+    dig("right", 6)
+    dig("down", 6)
+    dig("right", 1)
+    dig("up", 3)
+    time.sleep(1)
+    start()
+
+start()
