@@ -11,7 +11,7 @@ goDown = [920, 570]
 boxDown = [920, 545]
 door = [1000, 500]
 openDoor = [1000, 470]
-lastDig = "up"
+lastDig = "left"
 
 def lclick(x,y):
     win32api.SetCursorPos((x,y))
@@ -44,7 +44,6 @@ def digDown():
     time.sleep(0.2)
     rclick(boxDown[0], boxDown[1])
     pyautogui.moveTo(831, 1050)
-    # time.sleep(1.5)
     checkEnd()
     lclick(goDown[0], goDown[1])
     pyautogui.moveTo(831, 1050)
@@ -57,7 +56,6 @@ def digLeft():
     time.sleep(0.2)
     rclick(boxLeft[0], boxLeft[1])
     pyautogui.moveTo(831, 1050)
-    # time.sleep(1.5)
     checkEnd()
     lclick(goLeft[0], goLeft[1])
     pyautogui.moveTo(831, 1050)
@@ -70,7 +68,6 @@ def digRight():
     time.sleep(0.2)
     rclick(boxRight[0], boxRight[1])
     pyautogui.moveTo(831, 1050) 
-    # time.sleep(1.5)
     checkEnd()
     lclick(goRight[0], goRight[1])
     pyautogui.moveTo(831, 1050)
@@ -97,53 +94,9 @@ def goIn():
     time.sleep(4)
     startDig()
 
-# def checkEndR():
-#     switch = 0
-#     for i in range(110):
-#         r,g,b = pyautogui.pixel(1142, 524)
-#         if (g >= 220 and b >= 220):
-#             switch = 1
-#             break
-#     if (switch == 1):
-#         time.sleep(3)
-#         return
-
-# def checkEndL():
-#     switch = 0
-#     for i in range(110):
-#         r,g,b = pyautogui.pixel(1255, 577)
-#         if (g >= 220 and b >= 220):
-#             switch = 1
-#             break
-#     if (switch == 1):
-#         time.sleep(3)
-#         return
-
-# def checkEndU():
-#     switch = 0
-#     for i in range(110):
-#         r,g,b = pyautogui.pixel(1132, 585)
-#         if (g >= 220 and b >= 220):
-#             switch = 1
-#             break
-#     if (switch == 1):
-#         time.sleep(3)
-#         return
-
-# def checkEndD():
-#     switch = 0
-#     for i in range(110):
-#         r,g,b = pyautogui.pixel(1255, 524)
-#         if (g >= 220 and b >= 220):
-#             switch = 1
-#             break
-#     if (switch == 1):
-#         time.sleep(3)
-#         return
-
 def checkEnd():
     switch = 0
-    for i in range(105):
+    for i in range(115):
         if (lastDig == "up"):
             r,g,b = pyautogui.pixel(1141 , 335)
         elif (lastDig == "down"):
@@ -185,9 +138,10 @@ def start():
     dig("down", 6)
     dig("left", 1)
     dig("up", 5)
-    dig("left", 3)
-    time.sleep(2)
+    dig("left", 1)
+    time.sleep(3)
     start()
 
 time.sleep(2)
 start()
+
