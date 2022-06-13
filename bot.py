@@ -1,5 +1,5 @@
-from tracemalloc import stop
-import pyautogui, win32api, win32con, time
+import pyautogui, time
+from bot_utils import lclick, rclick, switchPaths, goIn
 
 goRight = [1010, 575]
 boxRight = [1010, 550]
@@ -9,21 +9,7 @@ goUp = [1000, 520]
 boxUp = [1000, 495]
 goDown = [920, 570]
 boxDown = [920, 545]
-door = [1000, 500]
-openDoor = [1000, 470]
-lastDig = "left"
-
-def lclick(x,y):
-    win32api.SetCursorPos((x,y))
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-    time.sleep(0.1)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-
-def rclick(x,y):
-    win32api.SetCursorPos((x,y))
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
-    time.sleep(0.1)
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
+lastDig = "up"
 
 def digUp():
     global lastDig
@@ -36,7 +22,6 @@ def digUp():
     pyautogui.moveTo(831, 1050)
     time.sleep(0.3)
     lastDig = "up"
-
 
 def digDown():
     global lastDig
@@ -74,26 +59,6 @@ def digRight():
     time.sleep(0.3)
     lastDig = "right"
 
-
-def startDig():
-    rclick(door[0], door[1])
-    time.sleep(0.5)
-    rclick(openDoor[0], openDoor[1])
-    time.sleep(0.5)
-    lclick(goUp[0], goUp[1])
-    time.sleep(0.4)
-
-def switchPaths():
-    lclick(964, 602)
-    time.sleep(0.4)
-
-def goIn():
-    rclick(700,350)
-    time.sleep(0.5)
-    lclick(700,320)
-    time.sleep(4)
-    startDig()
-
 def checkEnd():
     switch = 0
     for i in range(115):
@@ -112,7 +77,6 @@ def checkEnd():
         time.sleep(3)
         start()
         
-
 def dig(direction, iterations):
     if (direction == "up"):
         for i in range(iterations):
@@ -126,8 +90,6 @@ def dig(direction, iterations):
     elif (direction == "down"):
         for i in range(iterations):
             digDown()
-    else:
-        print("fuck u")
 
 def start():
     goIn()
