@@ -1,4 +1,4 @@
-import win32api, win32con, time
+import win32api, win32con, time, pyautogui
 
 def lclick(x,y):
     win32api.SetCursorPos((x,y))
@@ -30,3 +30,14 @@ def goIn():
     lclick(700,320)
     time.sleep(4)
     startDig()
+
+def clickBox(dir):
+    rclick(dir[0], dir[1])
+    time.sleep(0.2)
+    rclick(dir[0], dir[1] - 25)
+    pyautogui.moveTo(831, 1050)
+
+def goNext(dir):
+    lclick(dir[0], dir[1])
+    pyautogui.moveTo(831, 1050)
+    time.sleep(0.3)

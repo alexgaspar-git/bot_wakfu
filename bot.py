@@ -1,66 +1,41 @@
 import pyautogui, time
-from bot_utils import lclick, rclick, switchPaths, goIn
+from bot_utils import switchPaths, goIn, clickBox, goNext
 
 goRight = [1010, 575]
-boxRight = [1010, 550]
 goLeft = [905, 515]
-boxLeft = [915, 490]
 goUp = [1000, 520]
-boxUp = [1000, 495]
 goDown = [920, 570]
-boxDown = [920, 545]
 lastDig = "up"
 
 def digUp():
     global lastDig
-    rclick(goUp[0], goUp[1])
-    time.sleep(0.2)
-    rclick(boxUp[0], boxUp[1])
-    pyautogui.moveTo(831, 1050)
+    clickBox(goUp)
     checkEnd()
-    lclick(goUp[0], goUp[1])
-    pyautogui.moveTo(831, 1050)
-    time.sleep(0.3)
+    goNext(goUp)
     lastDig = "up"
 
 def digDown():
     global lastDig
-    rclick(goDown[0], goDown[1])
-    time.sleep(0.2)
-    rclick(boxDown[0], boxDown[1])
-    pyautogui.moveTo(831, 1050)
+    clickBox(goDown)
     checkEnd()
-    lclick(goDown[0], goDown[1])
-    pyautogui.moveTo(831, 1050)
-    time.sleep(0.3)
+    goNext(goUp)
     lastDig = "down"
 
 def digLeft():
     global lastDig
-    rclick(goLeft[0], goLeft[1])
-    time.sleep(0.2)
-    rclick(boxLeft[0], boxLeft[1])
-    pyautogui.moveTo(831, 1050)
+    clickBox(goLeft)
     checkEnd()
-    lclick(goLeft[0], goLeft[1])
-    pyautogui.moveTo(831, 1050)
-    time.sleep(0.3)
+    goNext(goLeft)
     lastDig = "left"
 
 def digRight():
     global lastDig
-    rclick(goRight[0], goRight[1])
-    time.sleep(0.2)
-    rclick(boxRight[0], boxRight[1])
-    pyautogui.moveTo(831, 1050) 
+    clickBox(goRight)
     checkEnd()
-    lclick(goRight[0], goRight[1])
-    pyautogui.moveTo(831, 1050)
-    time.sleep(0.3)
+    goNext(goRight)
     lastDig = "right"
 
 def checkEnd():
-    switch = 0
     for i in range(115):
         if (lastDig == "up"):
             r,g,b = pyautogui.pixel(1141 , 335)
@@ -71,11 +46,8 @@ def checkEnd():
         elif (lastDig == "right"):
             r,g,b = pyautogui.pixel(1142, 274)
         if ((g >= 220 and b >= 220)):
-            switch = 1
-            break
-    if (switch == 1):
-        time.sleep(3)
-        start()
+            time.sleep(3)
+            start()
         
 def dig(direction, iterations):
     if (direction == "up"):
