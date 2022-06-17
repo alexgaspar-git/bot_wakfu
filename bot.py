@@ -7,33 +7,20 @@ goUp = [1000, 520]
 goDown = [920, 570]
 lastDig = "up"
 
-def digUp():
+def digDir(direction):
     global lastDig
-    clickBox(goUp)
+    if (direction == "left"):
+        dir = goLeft
+    elif (direction == "right"):
+        dir = goRight
+    elif (direction == "down"):
+        dir = goDown
+    elif (direction == "up"):
+        dir = goUp
+    clickBox(dir)
     checkEnd()
-    goNext(goUp)
-    lastDig = "up"
-
-def digDown():
-    global lastDig
-    clickBox(goDown)
-    checkEnd()
-    goNext(goUp)
-    lastDig = "down"
-
-def digLeft():
-    global lastDig
-    clickBox(goLeft)
-    checkEnd()
-    goNext(goLeft)
-    lastDig = "left"
-
-def digRight():
-    global lastDig
-    clickBox(goRight)
-    checkEnd()
-    goNext(goRight)
-    lastDig = "right"
+    goNext(dir)
+    lastDig = direction
 
 def checkEnd():
     for i in range(115):
@@ -52,16 +39,16 @@ def checkEnd():
 def dig(direction, iterations):
     if (direction == "up"):
         for i in range(iterations):
-            digUp()
+            digDir(direction)
     elif (direction == "left"):
         for i in range(iterations):
-            digLeft()
+            digDir(direction)
     elif (direction == "right"):
         for i in range(iterations):
-            digRight()
+            digDir(direction)
     elif (direction == "down"):
         for i in range(iterations):
-            digDown()
+            digDir(direction)
 
 def start():
     goIn()
@@ -74,8 +61,10 @@ def start():
     dig("up", 5)
     dig("left", 1)
     time.sleep(3)
-    start()
 
-time.sleep(2)
-start()
+def main():
+    time.sleep(2)
+    for i in range(150):
+        start()
 
+main()
